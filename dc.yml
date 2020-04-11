@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+
+  # wsgi
+  backend_test:
+    build: .
+    command: python manage.py runserver 0:8000
+    container_name: backend_test
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./:/srv/project
+    depends_on:
+      - postgres_test
+      - memcached_test
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+
+  memcached_test:
+    image: memcached:latest
+    container_name: memcached_test
+    restart: always
+
+  postgres_test:
+    image: postgres:11.3
+    container_name: postgres_test
+    restart: always
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  nginx_test:
+    image: nginx:1.17.4-alpine
+    container_name: nginx_test
+    volumes:
+      - ./nginx:/etc/nginx/conf.d/
+      - ./static_content:/etc/nginx/static_content/
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend_test
+
+volumes:
+  pgdata: {}
