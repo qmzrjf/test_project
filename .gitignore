@@ -132,3 +132,4 @@ dmypy.json
 settings_local.py
 log.txt
 coverage
+.idea
