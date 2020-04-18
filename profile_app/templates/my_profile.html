@@ -1,0 +1,21 @@
+{%extends 'base.html'%}
+
+{%block title%}My profile{% endblock title%}
+{%block content%}
+
+<form >
+    <p>{{customer.first_name}}</p>
+    <p>{{customer.last_name}}</p>
+    <p>{{customer.email}}</p>
+    <p>{{customer.date_of_birth}}</p>
+    {%csrf_token%}
+</form>
+
+<form method = "post" >
+    {{form.as_p}}
+    <input type="date">
+    {{signupform.date_of_birth}}
+    {%csrf_token%}
+      <button type="submit">Edit</button>
+</form>
+{% endblock content%}
