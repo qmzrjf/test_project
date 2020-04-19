@@ -6,7 +6,7 @@ from profile_app import model_choices as mch
 
 class Customer(AbstractUser):
     phone = models.CharField(max_length=13, unique=True, blank=True, null=True)
-    biography = models.TextField()
+    biography = models.TextField(blank=True, null=True)
     date_of_birth = models.DateField(default=timezone.now, blank=True)
 
 
